@@ -28,7 +28,7 @@ namespace Yummer.Controllers
         public  string GetAllRecipes()
         {
             var result =  RecipeDAL.GetAllRecipes(_applicationDbContext).ToList();
-            return JsonConvert.SerializeObject("result");        
+            return JsonConvert.SerializeObject(result);        
         }
 
 
