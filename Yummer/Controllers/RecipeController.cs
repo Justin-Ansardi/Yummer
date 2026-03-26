@@ -8,15 +8,15 @@ using Newtonsoft.Json;
 using Yummer.Models;
 using Yummer.DAL;
 
-namespace Strength_API.Controllers
+namespace Yummer.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class HomeController
+    public class RecipeController
     {
         private readonly ApplicationDbContext _applicationDbContext;
 
-        public HomeController(ApplicationDbContext applicationDbContext)
+        public RecipeController(ApplicationDbContext applicationDbContext)
         {
             _applicationDbContext = applicationDbContext;
         }
@@ -28,7 +28,7 @@ namespace Strength_API.Controllers
         public  string GetAllRecipes()
         {
             var result =  RecipeDAL.GetAllRecipes(_applicationDbContext).ToList();
-            return JsonConvert.SerializeObject(result);        
+            return JsonConvert.SerializeObject("result");        
         }
 
 

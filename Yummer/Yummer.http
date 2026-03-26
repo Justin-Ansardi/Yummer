@@ -1,6 +1,6 @@
 @Yummer_HostAddress = http://localhost:5027
 
-GET {{Yummer_HostAddress}}/weatherforecast/
+GET {{Yummer_HostAddress}}/GetAllRecipes/
 Accept: application/json
 
 ###
