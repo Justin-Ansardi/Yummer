@@ -1,30 +1,58 @@
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Identity.Web.Resource;
 
-namespace Yummer.Controllers
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System.Net.Mime;
+using System.Text.Json.Serialization;
+using Newtonsoft.Json;
+using Yummer.Models;
+
+namespace Strength_API.Controllers
 {
-    //[Authorize]
     [ApiController]
     [Route("[controller]")]
-    [RequiredScope(RequiredScopesConfigurationKey = "AzureAd:Scopes")]
-    public class WeatherForecastController : ControllerBase
+    public class HomeController
     {
-        private static readonly string[] Summaries =
-        [
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        ];
+        private readonly ApplicationDbContext _applicationDbContext;
 
-        [HttpGet(Name = "GetWeatherForecast")]
-        public IEnumerable<WeatherForecast> Get()
+        public HomeController(ApplicationDbContext applicationDbContext)
         {
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            {
-                Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                TemperatureC = Random.Shared.Next(-20, 55),
-                Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-            })
-            .ToArray();
+            _applicationDbContext = applicationDbContext;
         }
+
+
+
+        [HttpGet(Name = "GetAllRecipes")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public string GetAllUsers()
+        {
+            /* var result = Make call to Data Service
+                            Example:
+                                     MyDataSerive.GetAllUsers(_applicationDbContext).ToList();
+            */
+
+            //return JsonConvert.SerializeObject(result);
+            return JsonConvert.SerializeObject(""); // place holder until I stub
+
+        }
+
+
+        [HttpPost(Name = "CreateNewRecipe")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<Recipe>> CreateNewRecipe(Recipe recipe)
+        {
+            if (recipe == null)
+            {
+                return new BadRequestResult();
+            }
+
+           // await  MyCreationalSerive.CreateNewRecipe(_applicationDbContext, recipe);
+
+            return new CreatedAtRouteResult(nameof(CreateNewRecipe), new { id = recipe.Id }, recipe);
+        }
+
+
+
     }
 }
