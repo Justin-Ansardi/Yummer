@@ -24,7 +24,7 @@ namespace Strength_API.Controllers
 
         [HttpGet(Name = "GetAllRecipes")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public string GetAllUsers()
+        public string GetAllRecipes()
         {
             /* var result = Make call to Data Service
                             Example:
