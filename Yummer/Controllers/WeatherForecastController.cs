@@ -6,6 +6,7 @@ using System.Net.Mime;
 using System.Text.Json.Serialization;
 using Newtonsoft.Json;
 using Yummer.Models;
+using Yummer.DAL;
 
 namespace Strength_API.Controllers
 {
@@ -24,16 +25,10 @@ namespace Strength_API.Controllers
 
         [HttpGet(Name = "GetAllRecipes")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public string GetAllRecipes()
+        public  string GetAllRecipes()
         {
-            /* var result = Make call to Data Service
-                            Example:
-                                     MyDataSerive.GetAllUsers(_applicationDbContext).ToList();
-            */
-
-            //return JsonConvert.SerializeObject(result);
-            return JsonConvert.SerializeObject(""); // place holder until I stub
-
+            var result =  RecipeDAL.GetAllRecipes(_applicationDbContext).ToList();
+            return JsonConvert.SerializeObject(result);        
         }
 
 
@@ -42,17 +37,10 @@ namespace Strength_API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<Recipe>> CreateNewRecipe(Recipe recipe)
         {
-            if (recipe == null)
-            {
-                return new BadRequestResult();
-            }
-
-           // await  MyCreationalSerive.CreateNewRecipe(_applicationDbContext, recipe);
-
+            if (recipe == null) return new BadRequestResult();
+          
+            await  RecipeDAL.CreateNewRecipe(_applicationDbContext, recipe);
             return new CreatedAtRouteResult(nameof(CreateNewRecipe), new { id = recipe.Id }, recipe);
         }
-
-
-
     }
 }
