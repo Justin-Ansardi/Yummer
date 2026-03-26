@@ -18,7 +18,7 @@ namespace Strength_API.Controllers
         public HomeController(ApplicationDbContext applicationDbContext)
         {
             _applicationDbContext = applicationDbContext;
-        }
+        }Re
 
 
 
